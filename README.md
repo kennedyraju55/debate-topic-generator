@@ -18,8 +18,10 @@
 <a href="https://github.com/kennedyraju55/debate-topic-generator/actions"><img src="https://img.shields.io/badge/Tests-Passing-brightgreen?style=flat-square&logo=pytest&logoColor=white" alt="Tests"/></a>
 <a href="https://github.com/kennedyraju55/debate-topic-generator"><img src="https://img.shields.io/badge/PRs-Welcome-4361ee?style=flat-square" alt="PRs Welcome"/></a>
 <a href="https://github.com/kennedyraju55/90-local-llm-projects"><img src="https://img.shields.io/badge/Part_of-90_Local_LLM_Projects-blueviolet?style=flat-square" alt="90 Local LLM Projects"/></a>
+<img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
 
-<br/>
+
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white"/><br/>
 <br/>
 
 <strong>⚔️ Generate debate topics with evidence-rated arguments, counterargument pairs,<br/>moderator guides, and weighted judging criteria — powered entirely by a local LLM.</strong>
@@ -148,9 +150,86 @@ debate-gen generate --subject "artificial intelligence" --complexity intermediat
 
 <br/>
 
+
+## 🐳 Docker Deployment
+
+Run this project instantly with Docker — no local Python setup needed!
+
+### Quick Start with Docker
+
+```bash
+# Clone and start
+git clone https://github.com/kennedyraju55/debate-topic-generator.git
+cd debate-topic-generator
+docker compose up
+
+# Access the web UI
+open http://localhost:8501
+```
+
+### Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `docker compose up` | Start app + Ollama |
+| `docker compose up -d` | Start in background |
+| `docker compose down` | Stop all services |
+| `docker compose logs -f` | View live logs |
+| `docker compose build --no-cache` | Rebuild from scratch |
+
+### Architecture
+
+```
+┌─────────────────┐     ┌─────────────────┐
+│   Streamlit UI  │────▶│   Ollama + LLM  │
+│   Port 8501     │     │   Port 11434    │
+└─────────────────┘     └─────────────────┘
+```
+
+> **Note:** First run will download the Gemma 4 model (~5GB). Subsequent starts are instant.
+
+---
+
+
 ---
 
 <br/>
+
+
+---
+
+## ⚡ REST API
+
+Every project includes a FastAPI REST API with auto-generated docs.
+
+### Start the API Server
+
+```bash
+# Run directly
+uvicorn src.debate_gen.api:app --reload --port 8000
+
+# Or with Docker
+docker compose up
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `GET` | `/docs` | Interactive Swagger UI |
+| `GET` | `/redoc` | ReDoc documentation |
+| `POST` | `/analyze` | Main analysis endpoint |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"text": "your input here"}'
+```
+
+> 📖 Visit `http://localhost:8000/docs` for the full interactive API documentation.
 
 ## 💻 CLI Reference
 
